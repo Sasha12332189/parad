@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            background: #d84315;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        form h2 {
+            color: #d84315;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        form button {
+            width: 100%;
+            background: #d84315;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        form button:hover {
+            background: #b71c1c;
+        }
+
+        .summary {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Оплата заказа</h1>
+    </header>
+    <form onsubmit="submitPayment(event)">
+        <h2>Введите данные карты</h2>
+        <div class="summary">
+            <p>Вы оплачиваете: <strong><span id="totalAmount">0</span> грн</strong></p>
+        </div>
+        <input type="text" placeholder="Номер карты (16 цифр)" required minlength="16" maxlength="16">
+        <input type="text" placeholder="Имя на карте" required>
+        <input type="text" placeholder="MM/YY (срок действия)" required minlength="5" maxlength="5">
+        <input type="text" placeholder="CVV (3 цифры)" required minlength="3" maxlength="3">
+        <button type="submit">Оплатить</button>
+    </form>
+    <script>
+        // Получаем общую сумму из localStorage
+        const totalAmount = localStorage.getItem('totalAmount');
+        document.getElementById('totalAmount').textContent = totalAmount || '0';
+
+        // Обработка формы оплаты
+        function submitPayment(event) {
+            event.preventDefault();
+
+            // Здесь можно добавить интеграцию с платежной системой
+
+            alert('Оплата успешно проведена! Спасибо за заказ.');
+            localStorage.removeItem('cart'); // Очищаем корзину
+            localStorage.removeItem('totalAmount');
+            localStorage.removeItem('cartItems');
+            window.location.href = 'index.html'; // Возвращаемся на главную страницу
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Полное меню</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Общие стили для заголовков */
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+        h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+
+        /* Основные настройки страницы */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Стили навигации */
+        header {
+            background: url('img/pizza.jpg') no-repeat  center center/cover;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header nav {
+            margin-top: 10px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffe082;
+        }
+
+        /* Основные секции */
+        section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #to-top-btn {
+            position: fixed;
+            bottom: 15px;
+            right: 20px;
+            display: none;
+            background: #d84315;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s;
+        }
+
+        #to-top-btn:hover {
+            background: #b71c1c;
+        }
+
+        h2.box {
+            display: inline-block;
+            width: 96%;
+            margin: 20 px auto;
+            padding: 20px;
+            background-color: #ff5715;
+            border: 2px solid #ff5715;
+            border-radius: 10px;
+        }
+
+        /* Стили для раздела меню */
+        .menu-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* Для выравнивания элементов по вертикали */
+            height: 100%; 
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item h3 {
+            text-align: center;
+            color: #d84315;
+            margin-bottom: 5px;
+            font-size: 1.5rem;
+        }
+        .menu-item img {
+            width: 65%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .menu-item p {
+            text-align: center;
+            color: #555;
+            font-size: 1.1rem;
+        }
+        .menu-item button {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 0 15px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .menu-item button:hover {
+            background: #e64a19;
+        }
+
+        /* Подвал */
+        footer {
+            background: #d84315;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #ffe082;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #ffd740;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Полное меню</h1>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="#pizza">Пицца</a>
+            <a href="#drinks">Напитки</a>
+            <a href="#desserts">Десерты</a>
+            <a href="cart.html">Корзина</a>
+        </nav>
+    </header>
+
+    <section id="pizza">
+        <h2 class="box">Пицца</h2>
+        <div class="menu-item">
+            <h3>Маргарита</h3>
+            <img src="img/marg.jpg">
+            <p>Томатный соус, сыр моцарелла, базилик. Цена 350грн</p>
+            <button data-name="Маргарита" onclick="addToCart('Маргарита', 350)">Добавить в Корзину </button>
+        </div>
+        <div class="menu-item">
+            <h3>Пепперони</h3>
+            <img src="img/pep.jpg">
+            <p>Томатный соус, сыр моцарелла, пепперони. Цена 400грн</p>
+            <button data-name="Пепперони" onclick="addToCart('Пепперони', 400)">Добавить в Корзину </button>
+        </div>
+        <div class="menu-item">
+            <h3>Гавайская</h3>
+            <img src="img/gav.jpg">
+            <p>Томатный соус, сыр моцарелла, ананас, ветчина. Цена 450грн</p>
+            <button data-name="Гавайская" onclick="addToCart('Гавайская', 450)">Добавить в Корзину</button>
+        </div>
+    </section>
+
+    <section id="drinks">
+        <h2 class="box">Напитки</h2>
+        <div class="menu-item">
+            <h3>Кола</h3>
+            <img src="img/cola.jpg">
+            <p>Свежая, холодная газировка. Цена 50грн</p>
+            <button data-name="Кола" onclick="addToCart('Кола', 50)">Добавить в Корзину</button>
+        </div>
+        <div class="menu-item">
+            <h3>Чай</h3>
+            <img src="img/tea.jpg">
+            <p>Чёрный, зелёный или травяной чай. Цена 35грн</p>
+            <button data-name="Чай" onclick="addToCart('Чай', 35)">Добавить в Корзину</button>
+        </div>
+    </section>
+
+    <section id="desserts">
+        <h2 class="box">Десерты</h2>
+        <div class="menu-item">
+            <h3>Чизкейк</h3>
+            <img src="img/cheseecake.jpg">
+            <p>Кремовый сырный торт с ягодным соусом. Цена 200грн</p>
+            <button data-name="Чизкейк" onclick="addToCart('Чизкейк', 200)">Добавить в Корзину</button>
+        </div>
+        <div class="menu-item">
+            <h3>Шоколадный фондан</h3>
+            <img src="img/chocolate.jpg">
+            <p>Тёплый десерт с тающим шоколадом внутри. Цена 200грн</p>
+            <button data-name="Шоколадный фондан" onclick="addToCart('Шоколадный фондан', 200)">Добавить в Корзину</button>
+        </div>
+    </section>
+
+    <button id="to-top-btn" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Показать кнопку "Наверх" при прокрутке
+        window.onscroll = function () {
+            const btn = document.getElementById('to-top-btn');
+            if (document.documentElement.scrollTop > 300) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+
+        // Функция прокрутки наверх
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Обновляем кнопку после добавления в корзину
+            let buttons = document.querySelectorAll(`button[data-name="${name}"]`);
+            buttons.forEach(button => {
+                button.textContent = 'В корзине';
+                button.disabled = true;
+            });
+        }
+    </script>
+
+    <footer>
+        <p>&copy; 2024 Pizza Paradise</p>
+    </footer>
+</body>
+</html>

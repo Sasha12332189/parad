@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <style>
+        /* Общие стили */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        /* Стили для шапки */
+        header {
+            background: url('pizza.jpg') no-repeat center center/cover;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header nav {
+            margin-top: 10px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffe082;
+        }
+
+        /* Стили для секции корзины */
+        #cart {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #cart h2 {
+            color: #d84315;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #cart-items div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        #cart-items div:last-child {
+            border-bottom: none;
+        }
+
+        #cart-items div button {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #cart-items div button:hover {
+            background: #b71c1c;
+        }
+
+        /* Стили для общей суммы и кнопки оформления */
+        #cart p {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        #cart button {
+            display: block;
+            background: #d84315;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 20px auto 0;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #cart button:hover {
+            background: #b71c1c;
+        }
+
+        #promo-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #promo-section input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            margin-right: 10px;
+        }
+
+        #promo-section button {
+            background: #d84315;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #promo-section button:hover {
+            background: #b71c1c;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Корзина</h1>
+        <nav>
+            <a href="index.html">Главная</a>
+            <a href="menu.html">Меню</a>
+        </nav>
+    </header>
+    <section id="cart">
+        <h2>Ваши товары</h2>
+        <div id="cart-items"></div>
+        <p><strong>Общая сумма: <span id="total-price">0</span> грн</strong></p>
+        <button onclick="proceedToPayment()">Оформить заказ</button>
+        <button onclick="clearCart()">Очистить корзину</button>
+    </section>
+
+    <div id="promo-section">
+        <input type="text" id="promo-code" placeholder="Введите промокод">
+        <button onclick="applyPromoCode()">Применить</button>
+        <p id="promo-message" style="color: green; display: none;"></p>
+    </div>
+
+    <script>
+         const promoCodes = {
+            "SALE10": 10, // 10% скидка
+            "SALE20": 20  // 20% скидка
+    };
+
+    let appliedDiscount = 0; // Переменная для хранения текущей скидки
+
+    function applyPromoCode() {
+        const promoInput = document.getElementById('promo-code').value.trim().toUpperCase();
+        const promoMessage = document.getElementById('promo-message');
+
+        if (promoCodes[promoInput]) {
+            appliedDiscount = promoCodes[promoInput];
+            updateCart(); // Обновляем корзину с учетом скидки
+            promoMessage.style.color = "green";
+            promoMessage.style.display = "block";
+            promoMessage.textContent = `Промокод применен! Скидка ${appliedDiscount}%.`;
+        } else {
+            appliedDiscount = 0; // Если промокод неверный, скидка сбрасывается
+            promoMessage.style.color = "red";
+            promoMessage.style.display = "block";
+            promoMessage.textContent = "Неверный промокод!";
+        }
+    }
+    </script>
+
+    <script>
+        // Чтение корзины из localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Функция обновления отображения корзины
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const totalPrice = document.getElementById('total-price');
+            cartItems.innerHTML = ''; // Очищаем список товаров
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Корзина пуста</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.innerHTML = `
+                        <span>${item.name} - ${item.price} грн</span>
+                        <button onclick="removeFromCart(${index})">Удалить</button>
+                    `;
+                    cartItems.appendChild(itemDiv);
+                    total += item.price;
+                });
+            }
+
+            // Применяем скидку, если она есть
+            if (appliedDiscount > 0) {
+                total = total - (total * appliedDiscount / 100);
+            }
+
+            totalPrice.textContent = total.toFixed(2); // Обновляем итоговую сумму
+        }
+
+
+        // Функция удаления товара из корзины
+        function removeFromCart(index) {
+            cart.splice(index, 1); // Удаляем товар по индексу
+            localStorage.setItem('cart', JSON.stringify(cart)); // Обновляем localStorage
+            updateCart(); // Перерисовываем корзину
+        }
+
+        // Функция очистки корзины
+        function clearCart() {
+            cart = []; // Сбрасываем корзину
+            localStorage.setItem('cart', JSON.stringify(cart)); // Обновляем localStorage
+            updateCart(); // Перерисовываем корзину
+        }
+
+        // Функция оформления заказа
+        function proceedToPayment() {
+            if (cart.length === 0) {
+                alert('Корзина пуста! Добавьте товары перед оформлением заказа.');
+                return;
+            }
+
+            // Сохраняем общую сумму и товары в localStorage для передачи на страницу оплаты
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            localStorage.setItem('totalAmount', total);
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+
+            // Перенаправление на страницу оплаты
+            window.location.href = 'payment.html';
+        }
+
+        // Инициализация отображения корзины
+        updateCart();
+    </script>
+</body>
+</html>
