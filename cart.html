@@ -133,6 +133,96 @@
             background: #b71c1c;
         }
 
+        @media (max-width: 768px) {
+            header {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header nav a {
+                font-size: 1rem;
+                margin: 0 10px;
+            }
+
+            #cart {
+                padding: 20px;
+            }
+
+            #cart h2 {
+                font-size: 1.5rem;
+            }
+
+            #cart-items div {
+                flex-wrap: wrap; /* Перенос строк */
+                text-align: left;
+            }
+
+            #cart-items div span, #cart-items div button {
+                width: 100%; /* Занимают всю ширину */
+                margin-bottom: 10px;
+            }
+
+            #cart-items div button {
+                text-align: center;
+            }
+
+            #cart p {
+                font-size: 1rem;
+            }
+
+            #promo-section input {
+                width: 80%; /* Растягиваем поле на весь экран */
+            }
+
+            #promo-section button {
+                width: 80%; /* Кнопка на всю ширину */
+                margin-top: 10px;
+            }
+
+            #cart button {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header nav a {
+                font-size: 0.9rem;
+                margin: 0 5px;
+            }
+
+            #cart {
+                padding: 10px;
+            }
+
+            #cart h2 {
+                font-size: 1.3rem;
+            }
+
+            #cart-items div span, #cart-items div button {
+                font-size: 0.9rem;
+            }
+
+            #promo-section input {
+                width: 100%; /* На маленьких экранах поле на всю ширину */
+            }
+
+            #promo-section button {
+                width: 100%;
+            }
+
+            #cart button {
+                width: 100%; /* Кнопки на всю ширину */
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
